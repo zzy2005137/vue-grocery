@@ -1,22 +1,40 @@
 <template>
-  <div class="home">
-    <h1>grocery store</h1>
-    <el-button size="small">默认按钮</el-button>
-    <el-button size="small">默认按钮</el-button>
-    <el-button size="small">默认按钮</el-button>
-    <filters></filters>
-  </div>
+  <el-container>
+    <el-header>
+      <Navigation @changeOption="changeOption" />
+    </el-header>
+    <el-main>
+      <ItemList :option="option" />
+    </el-main>
+    <el-footer>
+      <hr />
+      footer
+    </el-footer>
+  </el-container>
 </template>
 
 <script>
 // @ is an alias to /src
 
-import Filters from "../components/Filters.vue"
+import Navigation from "../components/Navigation.vue"
+import ItemList from "../components/ItemList.vue"
 
 export default {
   name: "Home",
   components: {
-    Filters,
+    Navigation,
+    ItemList,
+  },
+  data() {
+    return {
+      option: 1,
+    }
+  },
+
+  methods: {
+    changeOption(currentOption) {
+      this.option = currentOption
+    },
   },
 }
 </script>

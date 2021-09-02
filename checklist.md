@@ -1,8 +1,10 @@
-[-] filter animation 
+[-] filter animation
 
-[] element UI layout
+[-] element UI layout
 
-[] itemlist
+[-] itemlist
+
+[] card style
 
 [] detail page
 
