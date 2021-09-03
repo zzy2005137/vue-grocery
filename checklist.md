@@ -4,7 +4,9 @@
 
 [-] itemlist
 
-[] card style
+[-] card style
+
+
 
 [] detail page
 

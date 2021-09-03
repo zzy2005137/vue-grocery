@@ -2,7 +2,7 @@
   <div class="card">
     <el-image
       style="width: 100%; height: initial"
-      :src="url"
+      :src="getImgUrl"
       :fit="fit"
     ></el-image>
     <div class="info">
@@ -26,9 +26,15 @@ export default {
   name: "ItemCard",
   data() {
     return {
-      url: require(`@/img/item1.jpg`),
+      // url: require(`@/img/item1.jpg`),
       fit: "cover",
     }
+  },
+
+  computed: {
+    getImgUrl() {
+      return require(`@/assets/img/${this.itemImgUrl}.jpg`)
+    },
   },
 }
 </script>
