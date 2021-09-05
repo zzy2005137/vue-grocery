@@ -21,6 +21,12 @@
       <el-menu-item index="5">
         <router-link to="/landing"> 登录 </router-link></el-menu-item
       >
+      <el-menu-item index="6">
+        <router-link to="/about"> 关于 </router-link></el-menu-item
+      >
+      <el-menu-item index="7">
+        <router-link to="/back"> 后台 </router-link></el-menu-item
+      >
     </el-menu>
     <div class="line"></div>
   </div>
