@@ -72,51 +72,6 @@ export default {
           name: "bbb",
           address: "上海市普陀区金沙江路 1516 弄",
         },
-        {
-          date: "4",
-          name: "bbb",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-        {
-          date: "4",
-          name: "bbb",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-        {
-          date: "4",
-          name: "bbb",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-        {
-          date: "4",
-          name: "bbb",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-        {
-          date: "4",
-          name: "bbb",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-        {
-          date: "4",
-          name: "bbb",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-        {
-          date: "4",
-          name: "bbb",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-        {
-          date: "4",
-          name: "bbb",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-        {
-          date: "4",
-          name: "bbb",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
       ],
       search: "",
     }
