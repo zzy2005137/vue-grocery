@@ -6,12 +6,13 @@
 
 [-] card style
 
+[] landing page (firebase )
 
-
-[] detail page
+    - element ui , validate
+    - firebase
 
 [] put information on backend
 
-[] landing page
+[] detail page
 
 [] CRUD

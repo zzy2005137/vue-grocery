@@ -18,8 +18,8 @@
       <el-menu-item index="4" @click="$emit('changeOption', 4)"
         >其他</el-menu-item
       >
-      <el-menu-item index="5" @click="$emit('changeOption', 5)"
-        >登录</el-menu-item
+      <el-menu-item index="5">
+        <router-link to="/landing"> 登录 </router-link></el-menu-item
       >
     </el-menu>
     <div class="line"></div>
@@ -34,4 +34,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+a {
+  text-decoration: none;
+  color: #909399;
+}
+</style>
