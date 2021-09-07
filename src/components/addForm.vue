@@ -47,6 +47,8 @@
   >
 
   <el-button @click="resetForm('ruleForm')">重置</el-button>
+  <el-button @click="check">check</el-button>
+  <p>{{ checkUrl }}</p>
 </template>
 
 <script>
@@ -85,6 +87,8 @@ export default {
       dialogVisible: false,
       fullscreenLoading: false,
       fileList: [],
+
+      checkUrl: "",
     }
   },
   methods: {
@@ -173,7 +177,14 @@ export default {
     //     })
     // },
     check() {
-      console.log(this.ruleForm)
+      var db = firebaseApp.firestore()
+      db.collection("items")
+        .get()
+        .then((res) => {
+          res.forEach((item) => {
+            this.checkUrl += item.data().url
+          })
+        })
     },
 
     resetForm(ruleForm) {
