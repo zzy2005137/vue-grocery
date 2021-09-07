@@ -26,7 +26,7 @@
     <el-form-item label="商品名称" prop="name">
       <el-input v-model="ruleForm.name"></el-input>
     </el-form-item>
-    <el-form-item label="商品类别" prop="category">
+    <el-form-item v-if="categories" label="商品类别" prop="category">
       <el-select v-model="ruleForm.category" placeholder="请选择商品类别">
         <el-option
           v-for="(category, index) in categories"
