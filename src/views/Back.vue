@@ -1,7 +1,7 @@
 <template>
   <div class="back">
-    <el-page-header @back="goBack" content="管理页面" class="header">
-    </el-page-header>
+    <!-- <el-page-header @back="goBack" content="管理页面" class="header">
+    </el-page-header> -->
 
     <el-table
       :data="

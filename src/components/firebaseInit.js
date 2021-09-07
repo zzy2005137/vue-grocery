@@ -1,12 +1,15 @@
 // Initialize Cloud Firestore through Firebase
-import { base64Decode } from "@firebase/util"
-import { initializeApp } from "firebase/app"
-import { getFirestore } from "firebase/firestore"
+
+// import app from "firebase/app"
+// import firebaseConfig from "./firebaseConfig"
+// import "firebase/firestore"
+
+// const firebaseApp = app.initializeApp(firebaseConfig)
+
+// export default firebaseApp.firestore()
+
+import firebase from "firebase"
+import "firebase/firestore"
 import firebaseConfig from "./firebaseConfig"
-
-const firebaseApp = initializeApp(firebaseConfig)
-firebaseApp.name
-
-const db = getFirestore()
-
-export default db
+const firebaseApp = firebase.initializeApp(firebaseConfig)
+export default firebaseApp

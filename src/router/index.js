@@ -3,6 +3,7 @@ import Home from "../views/Home.vue"
 import Detail from "../views/Detail.vue"
 import Landing from "../views/Landing.vue"
 import back from "../views/Back.vue"
+import add from "../views/AddItem.vue"
 
 const routes = [
   {
@@ -33,6 +34,11 @@ const routes = [
     path: "/back",
     name: "Back",
     component: back,
+  },
+  {
+    path: "/add",
+    name: "Add",
+    component: add,
   },
 ]
 
