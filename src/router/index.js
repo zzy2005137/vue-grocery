@@ -4,6 +4,7 @@ import Detail from "../views/Detail.vue"
 import Landing from "../views/Landing.vue"
 import back from "../views/Back.vue"
 import add from "../views/AddItem.vue"
+import test from "../views/Test.vue"
 
 const routes = [
   {
@@ -39,6 +40,11 @@ const routes = [
     path: "/add",
     name: "Add",
     component: add,
+  },
+  {
+    path: "/test",
+    name: "Test",
+    component: test,
   },
 ]
 

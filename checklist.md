@@ -12,6 +12,8 @@
     - firebase
 
 [] put information on backend
+    [-] leanclod init 
+    [] crud 
 
 [] detail page
 
