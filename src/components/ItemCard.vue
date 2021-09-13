@@ -37,7 +37,7 @@ export default {
   text-align: left;
 }
 .img-wrapper {
-  height: 10rem;
+  min-height: 10rem;
   display: flex;
   justify-content: center;
   align-items: flex-start;
