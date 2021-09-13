@@ -1,5 +1,8 @@
 <template>
   <div id="item-list">
+    <div v-if="objArray.length === 0" class="waiting">
+      <h1>图片加载中...</h1>
+    </div>
     <transition-group tag="ul" name="list" class="container">
       <el-card
         v-for="item in objArray"

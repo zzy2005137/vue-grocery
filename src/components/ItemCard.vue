@@ -5,10 +5,12 @@
     </div>
     <div class="info">
       <h3>{{ item.name }}</h3>
-      <p>{{ item.description }}</p>
+      <h4>{{ item.description }}</h4>
       <p>{{ item.category }}</p>
     </div>
-    <el-button @click="$emit('deleteObj')">删除</el-button>
+    <el-button class="btn" @click="$emit('deleteObj')" type="danger" plain
+      >删除</el-button
+    >
   </div>
 </template>
 
@@ -43,5 +45,22 @@ export default {
 
 .img-wrapper img {
   width: 100%;
+}
+
+.info {
+  padding: 0 0.5rem;
+}
+.info h4 {
+  font-size: 1rem;
+  margin: 0.3rem 0;
+  color: #a1a1a1;
+  font-weight: 500;
+}
+.info p {
+  font-size: 0.9rem;
+}
+
+.btn {
+  margin: 0.5rem 0;
 }
 </style>

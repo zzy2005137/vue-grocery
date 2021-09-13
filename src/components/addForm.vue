@@ -3,8 +3,8 @@
     action="#"
     list-type="picture-card"
     :file-list="fileList"
-    :on-preview="handlePictureCardPreview"
     :on-remove="handleRemove"
+    :on-change="loadImg"
     :auto-upload="false"
     :http-request="myupload"
     ref="upload"
@@ -25,6 +25,9 @@
   >
     <el-form-item label="商品名称" prop="name">
       <el-input v-model="ruleForm.name"></el-input>
+    </el-form-item>
+    <el-form-item label="商品简介" prop="description">
+      <el-input v-model="ruleForm.description"></el-input>
     </el-form-item>
     <el-form-item v-if="categories" label="商品类别" prop="category">
       <el-select v-model="ruleForm.category" placeholder="请选择商品类别">
@@ -47,18 +50,11 @@
   >
 
   <el-button @click="resetForm('ruleForm')">重置</el-button>
-  <el-button @click="check">check</el-button>
-  <p>{{ checkUrl }}</p>
 </template>
 
 <script>
-//上传按钮 =》 图片上传 ==》 获取url ==》 连同名字一起存到对象数据库
-
 import { ElMessage } from "element-plus"
-import firebaseApp from "../components/firebaseInit"
-import "firebase/firestore"
-
-const Ref = firebaseApp.firestore().collection("items")
+import AV from "leancloud-storage"
 
 export default {
   name: "addForm",
@@ -66,8 +62,9 @@ export default {
     return {
       ruleForm: {
         name: "",
+        description: "",
         category: "",
-        url: "",
+        img: null,
       },
       rules: {
         name: [
@@ -82,109 +79,91 @@ export default {
         ],
       },
 
-      categories: [],
+      categories: ["干货", "酒类", "特产", "其他"],
       dialogImageUrl: "",
       dialogVisible: false,
       fullscreenLoading: false,
       fileList: [],
-
-      checkUrl: "",
     }
   },
   methods: {
     handleRemove(file, fileList) {
       console.log(file)
     },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url
-      this.dialogVisible = true
-    },
     submitUpload() {
       //   trigger submit
       this.$refs.upload.submit()
     },
-    showSuccessMessage() {
-      ElMessage.success("上传成功")
+    loadImg(file) {
+      console.log("handle img")
+      this.ruleForm.img = file.raw
+      console.log(this.ruleForm.img)
     },
-    showErrorMessage() {
-      ElMessage.error("上传失败")
+    showSuccessMessage(msg) {
+      ElMessage({
+        showClose: true,
+        type: "success",
+        message: msg,
+      })
     },
-    myupload(para) {
+    showErrorMessage(msg) {
+      ElMessage({
+        showClose: true,
+        type: "error",
+        message: msg,
+      })
+    },
+    myupload() {
       //验证表单
       if (this.ruleForm.name === "" || this.ruleForm.category === "") {
-        ElMessage({
-          showClose: true,
-          type: "error",
-          message: "信息不完整",
-        })
+        this.showErrorMessage("信息不完整")
         return
       }
-      //上传图片，获取url
-      //提交表单，保存对象
-      this.uploadImg(para)
-    },
-    uploadImg(para) {
-      //overide the default submit function
+
+      //屏幕锁定，上传中....
       this.fullscreenLoading = true
-      var storage = firebaseApp.storage()
+      this.uploadObj()
+    },
+    uploadObj() {
+      const file = new AV.File(this.ruleForm.img.name, this.ruleForm.img)
+      file.save().then(
+        (file) => {
+          console.log(`图片保存完成。URL：${file.url()}`)
 
-      //upload
-      var storageRef = storage.ref()
-      storageRef
-        .child("images/" + this.ruleForm.name)
-        .put(para.file)
-        .then(() => {
-          storageRef
-            .child("images/" + this.ruleForm.name)
-            .getDownloadURL()
-            .then((url) => {
-              this.ruleForm.url = url
-              this.addToDatabase()
-            })
-            .catch(function (error) {
+          // 创建对象，关联已上传图片
+          const Item = AV.Object.extend("item")
+          const localItem = new Item()
+          localItem.set("name", this.ruleForm.name)
+          localItem.set("description", this.ruleForm.description)
+          localItem.set("category", this.ruleForm.category)
+          // attachments 是一个 Array 属性
+          localItem.add("img", file)
+          localItem.save().then(
+            (res) => {
+              // 成功保存之后，执行其他逻辑
+              this.showSuccessMessage(`商品信息上传成功`)
+              this.fullscreenLoading = false
+              this.resetForm('ruleForm')
+            },
+            (error) => {
               console.log(error)
-            })
-        })
-        .catch(this.showErrorMessage)
-    },
-    addToDatabase() {
-      console.log(this.ruleForm.name + " is uploading")
-      Ref.add(this.ruleForm)
-        .then((docRef) => {
-          console.log("Document written with ID: ", docRef.id)
-          this.fullscreenLoading = false
 
-          console.log("上传成功")
-          this.fileList = []
-          ElMessage({
-            showClose: true,
-            type: "success",
-            message: "上传成功",
-          })
-        })
-        .catch((error) => {
-          console.error("Error adding document: ", error)
-        })
-    },
-    // getData() {
-    //   var db = firebaseApp.firestore()
-    //   db.collection("items")
-    //     .get()
-    //     .then((res) => {
-    //       res.forEach((item) => {
-    //         console.log(item.data())
-    //       })
-    //     })
-    // },
-    check() {
-      var db = firebaseApp.firestore()
-      db.collection("items")
-        .get()
-        .then((res) => {
-          res.forEach((item) => {
-            this.checkUrl += item.data().url
-          })
-        })
+              this.fullscreenLoading = false
+              this.showErrorMessage("上传失败: " + error)
+
+              // 异常处理
+            }
+          )
+        },
+        (error) => {
+          // 保存失败，可能是文件无法被读取，或者上传过程中出现问题
+
+          console.log(error)
+          // this.showErrorMessage("上传失败，请重置后重试")
+          this.fullscreenLoading = false
+          this.showErrorMessage("上传失败: " + error)
+        }
+      )
     },
 
     resetForm(ruleForm) {
@@ -192,20 +171,7 @@ export default {
       this.fileList = []
     },
   },
-  created() {
-    var db = firebaseApp.firestore()
-    var docRef = db
-      .collection("category")
-      .doc("list")
-      .get()
-      .then((list) => {
-        this.categories = list.data().categories
-        console.log(this.categories)
-      })
-      .catch((error) => {
-        console.log("Error getting document:", error)
-      })
-  },
+  created() {},
 }
 </script>
 
