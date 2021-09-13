@@ -6,16 +6,19 @@
       <input type="text" id="name" v-model="item.name" /> <br />
       <label for="description">description</label>
       <input type="text" id="description" v-model="item.description" /><br />
+      <label for="category">category</label>
+      <input type="text" id="category" v-model="item.category" /><br />
       <label for="img">image</label>
       <input type="file" id="img" @change="loadImg" /><br />
       <input type="submit" name="create" />
     </form>
     <button @click="getObj">getObj</button>
     <hr />
-    <div class="show">
-      <img :src="showObj.imgUrl" alt="xxx" />
-      <h3>{{ showObj.name }}</h3>
-      <p>{{ showObj.description }}</p>
+    <div class="show" v-for="obj in objArray" :key="obj.objectId">
+      <img :src="obj.img[0].url" alt="xxx" />
+      <h3>{{ obj.name }}</h3>
+      <p>{{ obj.description }}</p>
+      <button @click="deleteObj(obj)">删除该对象</button>
     </div>
   </div>
 </template>
@@ -30,6 +33,7 @@ export default {
       item: {
         name: "",
         description: "",
+        category: "",
         img: null,
       },
       showObj: {
@@ -37,6 +41,7 @@ export default {
         description: "",
         imgUrl: {},
       },
+      objArray: [],
     }
   },
   methods: {
@@ -59,6 +64,7 @@ export default {
             const localItem = new Item()
             localItem.set("name", this.item.name)
             localItem.set("description", this.item.description)
+            localItem.set("category", this.item.category)
             // attachments 是一个 Array 属性
             localItem.add("img", file)
             localItem.save().then(
@@ -82,14 +88,48 @@ export default {
     },
     uploadObj() {},
     getObj() {
+      console.log("进入getObj")
+
       const query = new AV.Query("item")
       query.include("img")
-      query.first().then((res) => {
-        // console.log(res.get("img")[0].url())
-        this.showObj.name = res.get("name")
-        this.showObj.description = res.get("description")
-        this.showObj.imgUrl = res.get("img")[0].url()
+      //单个查询
+      // query.first().then((res) => {
+      //   // console.log(res.get("img")[0].url())
+      //   this.showObj.name = res.get("name")
+      //   this.showObj.description = res.get("description")
+      //   this.showObj.imgUrl = res.get("img")[0].url()
+      // })
+
+      query.find().then((items) => {
+        // items 是包含满足条件的对象的数组
+        // toJSON()方法一次获取对象的全部属性，而不用一个个get
+        // console.log(items[0].get("img")[0].id)
+
+        var container = []
+        items.forEach((item) => {
+          container.push(item.toJSON())
+        })
+        this.objArray = container
+        console.log(this.objArray)
       })
+    },
+
+    deleteObj(obj) {
+      console.log(obj.img[0].objectId)
+
+      //删除文件
+      var targetId = obj.img[0].objectId
+      const file = AV.File.createWithoutData(targetId)
+      file.destroy()
+
+      //删除对象
+      const item = AV.Object.createWithoutData("item", obj.objectId)
+      item.destroy()
+      //更新数组
+
+      this.objArray.pop()
+
+      console.log("删除成功")
     },
 
     create(e) {
@@ -128,3 +168,5 @@ export default {
   },
 }
 </script>
+
+<style scoped></style>

@@ -1,26 +1,23 @@
 <template>
   <div id="item-list">
-    <router-link to="/detail">
-      <transition-group tag="ul" name="list" class="container">
-        <el-card
-          v-for="item in filterItems"
-          :key="item.id"
-          shadow="never"
-          class="item"
-          :body-style="{ padding: 0 }"
-        >
-          <ItemCard
-            :itemName="item.name"
-            :itemPrice="item.price"
-            :itemImgUrl="item.imgUrl"
-          />
-        </el-card> </transition-group
-    ></router-link>
+    <transition-group tag="ul" name="list" class="container">
+      <el-card
+        v-for="item in objArray"
+        :key="item.objectId"
+        shadow="never"
+        class="item"
+        :body-style="{ padding: 0 }"
+      >
+        <ItemCard :item="item" @deleteObj="deleteObj(item)" />
+      </el-card>
+    </transition-group>
   </div>
 </template>
 
 <script>
 import ItemCard from "./ItemCard.vue"
+import AV from "leancloud-storage"
+
 export default {
   props: ["option"],
   components: {
@@ -28,65 +25,70 @@ export default {
   },
   data() {
     return {
-      items: [
-        {
-          id: 1,
-          name: "干货",
-          index: 2,
-          price: 23.6,
-          imgUrl: "item1",
-        },
-        {
-          id: 2,
-          name: "干货",
-          index: 2,
-          price: 50.6,
-          imgUrl: "item2",
-        },
-        {
-          id: 3,
-          name: "干货",
-          index: 2,
-          price: 17.6,
-          imgUrl: "item3",
-        },
-        {
-          id: 4,
-          name: "粮油",
-          index: 3,
-          price: 66.9,
-          imgUrl: "item1",
-        },
-        {
-          id: 5,
-          name: "粮油",
-          index: 3,
-          price: 12.6,
-          imgUrl: "item2",
-        },
-        {
-          id: 6,
-          name: "其他",
-          index: 4,
-          price: 25.3,
-          imgUrl: "item3",
-        },
-      ],
-      fakeOption: 1,
+      objArray: [],
     }
   },
-  methods: {},
+  methods: {
+    getObjs() {
+      const query = new AV.Query("item")
+      query.include("img")
+      //单个查询
+      // query.first().then((res) => {
+      //   // console.log(res.get("img")[0].url())
+      //   this.showObj.name = res.get("name")
+      // })
+
+      query.find().then((items) => {
+        // items 是包含满足条件的对象的数组
+        // toJSON()方法一次获取对象的全部属性，而不用一个个get
+        // console.log(items[0].get("img")[0].id)
+
+        var container = []
+        items.forEach((item) => {
+          container.push(item.toJSON())
+        })
+        this.objArray = container
+        console.log(this.objArray)
+      })
+    },
+
+    deleteObj(obj) {
+      // console.log(obj.img[0].objectId)
+
+      //删除文件
+      var targetId = obj.img[0].objectId
+      const file = AV.File.createWithoutData(targetId)
+      file.destroy()
+
+      //删除对象
+      const item = AV.Object.createWithoutData("item", obj.objectId)
+      item.destroy()
+
+      //更新数组
+      const targetIndex = this.objArray.findIndex((element) => {
+        return element.objectId === obj.objectId
+      })
+
+      this.objArray.splice(targetIndex, 1)
+
+      console.log("删除成功")
+    },
+  },
 
   computed: {
-    filterItems() {
-      if (this.option === 1) {
-        return this.items
-      } else {
-        return this.items.filter((item) => {
-          return item.index === this.option
-        })
-      }
-    },
+    // filterItems() {
+    //   if (this.option === 1) {
+    //     return this.items
+    //   } else {
+    //     return this.items.filter((item) => {
+    //       return item.index === this.option
+    //     })
+    //   }
+    // },
+  },
+
+  created() {
+    this.getObjs()
   },
 }
 </script>

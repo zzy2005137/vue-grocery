@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <Navigation @changeOption="changeOption" />
+      <!-- <Navigation @changeOption="changeOption" /> -->
     </el-header>
     <el-main>
       <ItemList :option="option" />
@@ -16,13 +16,13 @@
 <script>
 // @ is an alias to /src
 
-import Navigation from "../components/Navigation.vue"
+// import Navigation from "../components/Navigation.vue"
 import ItemList from "../components/ItemList.vue"
 
 export default {
   name: "Home",
   components: {
-    Navigation,
+    // Navigation,
     ItemList,
   },
   data() {
