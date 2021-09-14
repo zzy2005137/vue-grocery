@@ -31,20 +31,9 @@
                 >登录</el-button
               >
               <el-button
-                :loading="loading"
                 class="login-button"
-                type="primary"
-                native-type="submit"
-                block
-                @click="register"
-                >注册</el-button
-              >
-              <el-button
-                :loading="loading"
-                class="login-button"
-                type="primary"
-                native-type="submit"
-                block
+                type="danger"
+                plain
                 @click="logout"
                 >注销</el-button
               >
@@ -57,14 +46,13 @@
 </template>
 
 <script>
+import AV from "leancloud-storage"
+import { ElMessage } from "element-plus"
+import router from "../router"
 export default {
   name: "login",
   data() {
     return {
-      validCredentials: {
-        username: "zzy2005137",
-        password: "854297163",
-      },
       model: {
         username: "",
         password: "",
@@ -87,11 +75,35 @@ export default {
   methods: {
     login(e) {
       e.preventDefault()
-      console.log(this.model.username + " " + this.model.password)
+      AV.User.logIn(this.model.username, this.model.password).then(
+        (user) => {
+          // 登录成功
+          ElMessage({
+            showClose: true,
+            type: "success",
+            message: "登陆成功",
+          })
+          console.log(user)
+          setTimeout(() => {
+            router.push("/")
+          }, 800)
+        },
+        (error) => {
+          ElMessage({
+            showClose: true,
+            type: "error",
+            message: "登陆失败，用户名或密码错误",
+          })
+          console.log(error)
+
+          // 登录失败（可能是密码错误）
+        }
+      )
     },
     logout(e) {
       e.preventDefault()
-      console.log("logout")
+      AV.User.logOut()
+      console.log(AV.User.current())
     },
     register(e) {
       e.preventDefault()

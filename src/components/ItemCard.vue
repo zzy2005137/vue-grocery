@@ -8,13 +8,19 @@
       <h4>{{ item.description }}</h4>
       <p>{{ item.category }}</p>
     </div>
-    <el-button class="btn" @click="$emit('deleteObj')" type="danger" plain
+    <el-button
+      v-if="isAdmin"
+      class="btn"
+      @click="$emit('deleteObj')"
+      type="danger"
+      plain
       >删除</el-button
     >
   </div>
 </template>
 
 <script>
+import AV from "leancloud-storage"
 export default {
   props: ["item"],
   name: "ItemCard",
@@ -23,9 +29,14 @@ export default {
   },
 
   computed: {
-    // getImgUrl() {
-    //   return require(`@/assets/img/${this.item.imgUrl}.jpg`)
-    // },
+    isAdmin() {
+      const currentUser = AV.User.current()
+      if (currentUser && currentUser.getUsername() === "linbili") {
+        return true
+      } else {
+        return false
+      }
+    },
   },
 
   methods: {},

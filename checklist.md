@@ -6,14 +6,15 @@
 
 [-] card style
 
-[] landing page (firebase )
+[] landing page (leancloud )
 
-    - element ui , validate
-    - firebase
+    - leancloud user
+    - vue
 
-[] put information on backend
-    [-] leanclod init 
-    [] crud 
+[-] put information on backend
+
+    - leanclod init
+    - crud
 
 [] detail page
 

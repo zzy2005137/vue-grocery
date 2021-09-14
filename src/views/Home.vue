@@ -8,6 +8,7 @@
     </el-main>
     <el-footer>
       <hr />
+      <!-- <el-button @click="checkCurrentUser">check user</el-button> -->
     </el-footer>
   </el-container>
 </template>
@@ -17,6 +18,7 @@
 
 import Navigation from "../components/Navigation.vue"
 import ItemList from "../components/ItemList.vue"
+import AV from "leancloud-storage"
 
 export default {
   name: "Home",
@@ -33,6 +35,9 @@ export default {
   methods: {
     changeOption(currentOption) {
       console.log("change option")
+    },
+    checkCurrentUser() {
+      console.log(AV.User.current().getUsername())
     },
   },
 }

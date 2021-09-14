@@ -93,6 +93,8 @@ export default {
   created() {
     this.getObjs()
   },
+
+
 }
 </script>
 
