@@ -14,6 +14,7 @@
         <ItemCard :item="item" @deleteObj="deleteObj(item)" />
       </el-card>
     </transition-group>
+    <p>{{ filterItems }}</p>
   </div>
 </template>
 
@@ -76,25 +77,40 @@ export default {
 
       console.log("删除成功")
     },
+
+    confirmDelete() {
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+        center: true,
+      })
+        .then(() => {
+          this.$message({
+            type: "success",
+            message: "删除成功!",
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          })
+        })
+    },
   },
 
   computed: {
-    // filterItems() {
-    //   if (this.option === 1) {
-    //     return this.items
-    //   } else {
-    //     return this.items.filter((item) => {
-    //       return item.index === this.option
-    //     })
-    //   }
-    // },
+    filterItems() {
+      return this.objArray.filter((item) => {
+        return item.category === this.option
+      })
+    },
   },
 
   created() {
     this.getObjs()
   },
-
-
 }
 </script>
 

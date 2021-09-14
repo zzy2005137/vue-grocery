@@ -6,10 +6,10 @@
       mode="horizontal"
       @select="handleSelect"
     >
-      <el-menu-item index="1">全部</el-menu-item>
+      <el-menu-item index="1" @click="$emit('changeOption')">全部</el-menu-item>
       <el-menu-item index="2">特产</el-menu-item>
       <el-menu-item index="3">干货</el-menu-item>
-      <el-menu-item index="4">其他</el-menu-item>
+      <el-menu-item index="5">其他</el-menu-item>
       <el-menu-item>
         <router-link to="/landing"> 登录 </router-link></el-menu-item
       ><el-menu-item @click="logout" v-if="isAdmin"> 注销 </el-menu-item>
@@ -37,12 +37,6 @@ export default {
   data() {
     return {
       // categories: ["全部", "干货", "特产", "酒类", "其他", "登陆"],
-      categories: [
-        { name: "Home", indexPath: "/home", index: "1" },
-        { name: "Subscribe", indexPath: "/subscribe", index: "2" },
-        { name: "About", indexPath: "/about", index: "3" },
-        { name: "More", indexPath: "/more", index: "4" },
-      ],
     }
   },
   methods: {

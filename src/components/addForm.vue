@@ -9,6 +9,7 @@
     :http-request="myupload"
     ref="upload"
     class="img-upload"
+    limit="1"
   >
     <i class="el-icon-plus"></i>
   </el-upload>
@@ -79,7 +80,7 @@ export default {
         ],
       },
 
-      categories: ["干货", "酒类", "特产", "其他"],
+      categories: ["干货", "特产", "其他"],
       dialogImageUrl: "",
       dialogVisible: false,
       fullscreenLoading: false,
@@ -94,10 +95,13 @@ export default {
       //   trigger submit
       this.$refs.upload.submit()
     },
-    loadImg(file) {
+    loadImg(file, fileList) {
       console.log("handle img")
       this.ruleForm.img = file.raw
       console.log(this.ruleForm.img)
+      // fileList.forEach((element) => {
+      //   console.log(element.raw)
+      // })
     },
     showSuccessMessage(msg) {
       ElMessage({
@@ -143,7 +147,7 @@ export default {
               // 成功保存之后，执行其他逻辑
               this.showSuccessMessage(`商品信息上传成功`)
               this.fullscreenLoading = false
-              this.resetForm('ruleForm')
+              this.resetForm("ruleForm")
             },
             (error) => {
               console.log(error)

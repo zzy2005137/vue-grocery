@@ -1,12 +1,18 @@
 <template>
   <div class="card">
     <div class="img-wrapper">
-      <img :src="item.img[0].url" alt="xxx" />
+      <!-- <img :src="item.img[0].url" alt="xxx" /> -->
+      <el-image
+        style="width: 100%; height: initial"
+        :src="item.img[0].url"
+        :preview-src-list="srcList"
+      >
+      </el-image>
     </div>
     <div class="info">
       <h3>{{ item.name }}</h3>
       <h4>{{ item.description }}</h4>
-      <p>{{ item.category }}</p>
+      <!-- <p>{{ item.category }}</p> -->
     </div>
     <el-button
       v-if="isAdmin"
@@ -25,7 +31,9 @@ export default {
   props: ["item"],
   name: "ItemCard",
   data() {
-    return {}
+    return {
+      srcList: [this.item.img[0].url],
+    }
   },
 
   computed: {
@@ -61,6 +69,10 @@ export default {
 .info {
   padding: 0 0.5rem;
 }
+.info h3 {
+  margin-top: 0.5rem;
+}
+
 .info h4 {
   font-size: 1rem;
   margin: 0.3rem 0;

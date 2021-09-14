@@ -33,8 +33,8 @@ export default {
   },
 
   methods: {
-    changeOption(currentOption) {
-      console.log("change option")
+    changeOption() {
+      console.log("current Option")
     },
     checkCurrentUser() {
       console.log(AV.User.current().getUsername())
