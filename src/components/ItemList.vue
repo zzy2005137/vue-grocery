@@ -14,7 +14,6 @@
         <ItemCard :item="item" @deleteObj="deleteObj(item)" />
       </el-card>
     </transition-group>
-    <p>{{ filterItems }}</p>
   </div>
 </template>
 

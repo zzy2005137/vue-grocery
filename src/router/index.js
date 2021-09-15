@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router"
 import Home from "../views/Home.vue"
 import Detail from "../views/Detail.vue"
 import Landing from "../views/Landing.vue"
-import back from "../views/Back.vue"
 import add from "../views/AddItem.vue"
 import test from "../views/Test.vue"
 
@@ -31,11 +30,7 @@ const routes = [
     name: "Landing",
     component: Landing,
   },
-  {
-    path: "/back",
-    name: "Back",
-    component: back,
-  },
+
   {
     path: "/add",
     name: "Add",
