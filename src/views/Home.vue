@@ -8,7 +8,8 @@
     </el-main>
     <el-footer>
       <hr />
-      <!-- <el-button @click="checkCurrentUser">check user</el-button> -->
+      <h4>加微信了解详情</h4>
+      <img class="contact" src="../assets/img/qrcode.jpg" alt="xxx" />
     </el-footer>
   </el-container>
 </template>
@@ -48,5 +49,11 @@ export default {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+h4 {
+  margin-top: 1rem;
+}
+.contact {
+  width: 10rem;
 }
 </style>
