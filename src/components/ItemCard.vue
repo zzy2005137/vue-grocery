@@ -11,7 +11,12 @@
     </div>
     <div class="info">
       <h3>{{ item.name }}</h3>
-      <h4>{{ item.description }}</h4>
+      <el-collapse class="collapse">
+        <el-collapse-item title="商品简介">
+          <h4>{{ item.description }}</h4>
+        </el-collapse-item>
+      </el-collapse>
+
       <!-- <p>{{ item.category }}</p> -->
     </div>
     <el-button
@@ -85,5 +90,9 @@ export default {
 
 .btn {
   margin: 0.5rem 0;
+}
+
+.collapse {
+  border: 0;
 }
 </style>
