@@ -27,6 +27,14 @@
       plain
       >删除</el-button
     >
+    <el-button
+      v-if="isAdmin"
+      class="btn"
+      @click="$emit('updateObj')"
+      type="success"
+      plain
+      >修改</el-button
+    >
   </div>
 </template>
 

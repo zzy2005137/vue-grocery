@@ -12,7 +12,9 @@
       <input type="file" id="img" @change="loadImg" /><br />
       <input type="submit" name="create" />
     </form>
-    <button @click="getObj">getObj</button>
+    <button @click="getObj">getObj</button><br />
+    <button @click="getOneObj">getOneObj</button><br />
+    <button @click="updateOneObj">updateOneObj</button>
     <hr />
     <div class="show" v-for="obj in objArray" :key="obj.objectId">
       <img :src="obj.img[0].url" alt="xxx" />
@@ -113,7 +115,55 @@ export default {
         console.log(this.objArray)
       })
     },
+    getOneObj() {
+      const query = new AV.Query("item")
+      query.include("img")
+      //单个查询
+      // query.first().then((res) => {
+      //   // console.log(res.get("img")[0].url())
+      //   // this.showObj.name = res.get("name")
+      //   // this.showObj.description = res.get("description")
+      //   // this.showObj.imgUrl = res.get("img")[0].url()
+      //   console.log(res.toJSON())
+      // })
 
+      //获取指定对象
+
+      let temp
+      query.get("6143f2585e26b06dbb219329").then((res) => {
+        // console.log(res.get("img")[0])
+        temp = res
+
+        console.log(temp.get("img"))
+        console.log("================================")
+        console.log("change the img")
+
+        this.changeImg(temp.get("img"))
+      })
+    },
+    changeImg(fileArray) {
+      console.log(fileArray)
+      const query = new AV.Query("item")
+      query.include("img")
+      let temp
+      query.get("6143fb71fb77015d809c2c19").then((res) => {
+        res.set("img", fileArray)
+        res.save().then((res) => {
+          console.log("更新成功")
+          console.log(res)
+        })
+      })
+    },
+    updateOneObj() {
+      console.log("update one obj")
+      //更新对象
+      const item = AV.Object.createWithoutData(
+        "item",
+        "6143f2585e26b06dbb219329"
+      )
+      item.set("name", "new name")
+      item.save()
+    },
     deleteObj(obj) {
       console.log(obj.img[0].objectId)
 

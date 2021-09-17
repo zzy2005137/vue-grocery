@@ -4,6 +4,7 @@ import Detail from "../views/Detail.vue"
 import Landing from "../views/Landing.vue"
 import add from "../views/AddItem.vue"
 import test from "../views/Test.vue"
+import update from "../components/updateForm.vue"
 
 const routes = [
   {
@@ -40,6 +41,12 @@ const routes = [
     path: "/test",
     name: "Test",
     component: test,
+  },
+  {
+    path: "/update",
+    name: "Update",
+    component: update,
+    props: true,
   },
 ]
 

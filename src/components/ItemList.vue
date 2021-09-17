@@ -11,7 +11,11 @@
         class="item"
         :body-style="{ padding: 0 }"
       >
-        <ItemCard :item="item" @deleteObj="deleteObj(item)" />
+        <ItemCard
+          :item="item"
+          @deleteObj="deleteObj(item)"
+          @updateObj="updateObj(item)"
+        />
       </el-card>
     </transition-group>
   </div>
@@ -20,6 +24,7 @@
 <script>
 import ItemCard from "./ItemCard.vue"
 import AV from "leancloud-storage"
+import router from "../router"
 
 export default {
   props: ["option"],
@@ -96,6 +101,22 @@ export default {
             message: "已取消删除",
           })
         })
+    },
+    updateObj(item) {
+      // const imgId = item.img[0].objectId
+      // const objId = item.objectId
+
+      router.push({
+        name: "Update",
+        params: {
+          fileId: item.img[0].objectId,
+          objectId: item.objectId,
+          url: item.img[0].url,
+          name: item.name,
+          description: item.description,
+          category: item.category,
+        },
+      })
     },
   },
 
