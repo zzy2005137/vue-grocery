@@ -3,9 +3,9 @@
     <div v-if="objArray.length === 0" class="waiting">
       <h1>图片加载中...</h1>
     </div>
-    <transition-group tag="ul" name="list" class="container">
+    <div tag="ul" name="list" class="container">
       <el-card
-        v-for="item in objArray"
+        v-for="item in filterItems"
         :key="item.objectId"
         shadow="never"
         class="item"
@@ -17,69 +17,66 @@
           @updateObj="updateObj(item)"
         />
       </el-card>
-    </transition-group>
+    </div>
   </div>
 </template>
 
 <script>
-import ItemCard from "./ItemCard.vue"
-import AV from "leancloud-storage"
-import router from "../router"
+import ItemCard from "./ItemCard.vue";
+import AV from "leancloud-storage";
+import router from "../router";
+import ItemService from "@/service/itemService.js";
 
 export default {
-  props: ["option"],
+  props: {
+    option: {
+      type: String,
+      default: "全部",
+    },
+  },
   components: {
     ItemCard,
   },
   data() {
     return {
       objArray: [],
-    }
+    };
   },
   methods: {
     getObjs() {
-      const query = new AV.Query("item")
-      query.include("img")
-      //单个查询
-      // query.first().then((res) => {
-      //   // console.log(res.get("img")[0].url())
-      //   this.showObj.name = res.get("name")
-      // })
-
-      query.find().then((items) => {
-        // items 是包含满足条件的对象的数组
-        // toJSON()方法一次获取对象的全部属性，而不用一个个get
-        // console.log(items[0].get("img")[0].id)
-
-        var container = []
+      ItemService.getItems().then((items) => {
         items.forEach((item) => {
-          container.push(item.toJSON())
-        })
-        this.objArray = container
-        console.log(this.objArray)
-      })
+          this.objArray.push(item.toJSON());
+        });
+        return items;
+      });
     },
 
     deleteObj(obj) {
-      // console.log(obj.img[0].objectId)
-
-      //删除文件
-      var targetId = obj.img[0].objectId
-      const file = AV.File.createWithoutData(targetId)
-      file.destroy()
-
-      //删除对象
-      const item = AV.Object.createWithoutData("item", obj.objectId)
-      item.destroy()
-
-      //更新数组
-      const targetIndex = this.objArray.findIndex((element) => {
-        return element.objectId === obj.objectId
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+        center: true,
       })
-
-      this.objArray.splice(targetIndex, 1)
-
-      console.log("删除成功")
+        .then(() => {
+          ItemService.deleteItem(obj);
+          //更新数组
+          const targetIndex = this.objArray.findIndex(
+            (element) => element.objectId === obj.objectId
+          );
+          this.objArray.splice(targetIndex, 1);
+          this.$message({
+            type: "success",
+            message: "删除成功!",
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
     },
 
     confirmDelete() {
@@ -93,14 +90,14 @@ export default {
           this.$message({
             type: "success",
             message: "删除成功!",
-          })
+          });
         })
         .catch(() => {
           this.$message({
             type: "info",
             message: "已取消删除",
-          })
-        })
+          });
+        });
     },
     updateObj(item) {
       // const imgId = item.img[0].objectId
@@ -116,25 +113,30 @@ export default {
           description: item.description,
           category: item.category,
         },
-      })
+      });
     },
   },
 
   computed: {
     filterItems() {
-      return this.objArray.filter((item) => {
-        return item.category === this.option
-      })
+      if (this.option === "全部") {
+        return this.objArray;
+      } else {
+        return this.objArray.filter((item) => item.category === this.option);
+      }
     },
   },
 
   created() {
-    this.getObjs()
+    this.getObjs();
   },
-}
+};
 </script>
 
 <style scoped>
+#item-list {
+  max-width: 800px;
+}
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr;

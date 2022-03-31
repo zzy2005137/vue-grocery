@@ -1,33 +1,13 @@
-[-] filter animation
+# checklist
 
-[-] element UI layout
+- 把获取数据的代码单独成模块
+- service 异步编程部分优化
 
-[-] itemlist
+- 把items数据移到 HOME 组件 实现商品展示和filter功能
+- filter 逻辑搞清楚
+- 把 props 改成对象参数
 
-[-] card style
 
-[] landing page (leancloud )
 
-    - leancloud user
-    - vue
-
-[-] put information on backend
-
-    - leanclod init
-    - crud
-
-[] detail page
-
-[] CRUD
-
-[] update
-
-    
-    - 更新文件
-        - 假性显示
-        - 删除原有文件
-        - 上传新文件
-        - 关联
-    - 更新对象
-        - 显示
-        - save
+问题 ：
+组件太深，数据逐层传递怎么办

@@ -39,29 +39,29 @@
 </template>
 
 <script>
-import AV from "leancloud-storage"
+import AV from "leancloud-storage";
 export default {
   props: ["item"],
   name: "ItemCard",
   data() {
     return {
       srcList: [this.item.img[0].url],
-    }
+    };
   },
 
   computed: {
     isAdmin() {
-      const currentUser = AV.User.current()
+      const currentUser = AV.User.current();
       if (currentUser && currentUser.getUsername() === "linbili") {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
     },
   },
 
   methods: {},
-}
+};
 </script>
 
 <style scoped>

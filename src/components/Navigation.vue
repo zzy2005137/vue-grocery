@@ -6,10 +6,18 @@
       mode="horizontal"
       @select="handleSelect"
     >
-      <el-menu-item index="1" @click="$emit('changeOption')">全部</el-menu-item>
-      <el-menu-item index="2">特产</el-menu-item>
-      <el-menu-item index="3">干货</el-menu-item>
-      <el-menu-item index="5">其他</el-menu-item>
+      <el-menu-item index="1" @click="$emit('changeOption', '全部')"
+        >全部</el-menu-item
+      >
+      <el-menu-item index="2" @click="$emit('changeOption', '特产')"
+        >特产</el-menu-item
+      >
+      <el-menu-item index="3" @click="$emit('changeOption', '干货')"
+        >干货</el-menu-item
+      >
+      <el-menu-item index="5" @click="$emit('changeOption', '其他')"
+        >其他</el-menu-item
+      >
       <el-menu-item>
         <router-link to="/landing"> 登录 </router-link></el-menu-item
       ><el-menu-item @click="logout" v-if="isAdmin"> 注销 </el-menu-item>
@@ -30,18 +38,18 @@
 </template>
 
 <script>
-import router from "../router"
-import AV from "leancloud-storage"
-import { ElMessage } from "element-plus"
+import router from "../router";
+import AV from "leancloud-storage";
+import { ElMessage } from "element-plus";
 export default {
   data() {
     return {
       // categories: ["全部", "干货", "特产", "酒类", "其他", "登陆"],
-    }
+    };
   },
   methods: {
     goAdd() {
-      router.push("/add")
+      router.push("/add");
     },
     logout() {
       AV.User.logOut().then(
@@ -50,23 +58,23 @@ export default {
           type: "success",
           message: "退出成功",
         })
-      )
+      );
 
-      router.go(0)
+      router.go(0);
     },
   },
   created() {},
   computed: {
     isAdmin() {
-      const currentUser = AV.User.current()
+      const currentUser = AV.User.current();
       if (currentUser && currentUser.getUsername() === "linbili") {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
     },
   },
-}
+};
 </script>
 
 <style scoped>

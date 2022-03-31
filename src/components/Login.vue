@@ -46,16 +46,16 @@
 </template>
 
 <script>
-import AV from "leancloud-storage"
-import { ElMessage } from "element-plus"
-import router from "../router"
+import AV from "leancloud-storage";
+import { ElMessage } from "element-plus";
+import router from "../router";
 export default {
   name: "login",
   data() {
     return {
       model: {
-        username: "",
-        password: "",
+        username: "linbili",
+        password: "4502996",
       },
       loading: false,
       rules: {
@@ -70,11 +70,11 @@ export default {
           { required: true, message: "Password is required", trigger: "blur" },
         ],
       },
-    }
+    };
   },
   methods: {
     login(e) {
-      e.preventDefault()
+      e.preventDefault();
       AV.User.logIn(this.model.username, this.model.password).then(
         (user) => {
           // 登录成功
@@ -82,35 +82,35 @@ export default {
             showClose: true,
             type: "success",
             message: "登陆成功",
-          })
-          console.log(user)
+          });
+          console.log(user);
           setTimeout(() => {
-            router.push("/")
-          }, 800)
+            router.push("/");
+          }, 800);
         },
         (error) => {
           ElMessage({
             showClose: true,
             type: "error",
             message: "登陆失败，用户名或密码错误",
-          })
-          console.log(error)
+          });
+          console.log(error);
 
           // 登录失败（可能是密码错误）
         }
-      )
+      );
     },
     logout(e) {
-      e.preventDefault()
-      AV.User.logOut()
-      console.log(AV.User.current())
+      e.preventDefault();
+      AV.User.logOut();
+      console.log(AV.User.current());
     },
     register(e) {
-      e.preventDefault()
-      console.log("register")
+      e.preventDefault();
+      console.log("register");
     },
   },
-}
+};
 </script>
 
 <style scoped>
