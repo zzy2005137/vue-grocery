@@ -1,16 +1,22 @@
-import { createRouter, createWebHistory } from "vue-router"
-import Home from "../views/Home.vue"
-import Detail from "../views/Detail.vue"
-import Landing from "../views/Landing.vue"
-import add from "../views/AddItem.vue"
-import test from "../views/Test.vue"
-import update from "../components/updateForm.vue"
+import { createRouter, createWebHistory } from "vue-router";
+import Home from "../views/Home.vue";
+import Detail from "../views/Detail.vue";
+import Landing from "../views/Landing.vue";
+import add from "../views/AddItem.vue";
+import test from "../views/Test.vue";
+import update from "../components/updateForm.vue";
+import Index from "../views/Index.vue";
 
 const routes = [
   {
     path: "/",
     name: "Home",
     component: Home,
+  },
+  {
+    path: "/index",
+    name: "Index",
+    component: Index,
   },
   {
     path: "/about",
@@ -48,11 +54,11 @@ const routes = [
     component: update,
     props: true,
   },
-]
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-})
+});
 
-export default router
+export default router;

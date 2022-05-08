@@ -43,13 +43,15 @@ export default {
     };
   },
   methods: {
-    getObjs() {
-      ItemService.getItems().then((items) => {
-        items.forEach((item) => {
-          this.objArray.push(item.toJSON());
-        });
-        return items;
-      });
+    async getObjs() {
+      // ItemService.getItems().then((items) => {
+      //   items.forEach((item) => {
+      //     this.objArray.push(item.toJSON());
+      //   });
+      //   return items;
+      // });
+      //改写成 async - await 方式
+      this.objArray = await ItemService.getItems();
     },
 
     deleteObj(obj) {

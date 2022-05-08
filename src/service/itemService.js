@@ -1,16 +1,22 @@
-import AV from "leancloud-storage";
+import AV from "./init.js";
 
-AV.init({
-  appId: "Ulaw7giTyqj4y7HPb5ghyo5d-gzGzoHsz",
-  appKey: "2NrLba4t067j7p7iNCzd2joJ",
-  serverURL: "https://ulaw7git.lc-cn-n1-shared.com",
-});
 
-function getItems() {
+async function getItems() {
   const query = new AV.Query("item");
   query.include("img");
-  return query.find();
+  let items = await query.find();
+  let container = [];
+  items.forEach((item) => {
+    container.push(item.toJSON());
+  });
+  return container;
 }
+
+// function getItems() {
+//   const query = new AV.Query("item");
+//   query.include("img");
+//   return query.find();
+// }
 
 function deleteItem(obj) {
   //删除文件
@@ -21,7 +27,6 @@ function deleteItem(obj) {
   //删除对象
   const item = AV.Object.createWithoutData("item", obj.objectId);
   item.destroy();
-  
 }
 
 export default {

@@ -1,6 +1,5 @@
 <template>
   <el-container>
-    <Nav :item="testData"></Nav>
     <el-header>
       <Navigation @changeOption="changeOption" />
     </el-header>
@@ -21,18 +20,16 @@
 import Navigation from "../components/Navigation.vue";
 import ItemList from "../components/ItemList.vue";
 import AV from "leancloud-storage";
-import Nav from "../components/Nav.vue";
 
 export default {
   name: "Home",
   components: {
     Navigation,
     ItemList,
-    Nav,
   },
   data() {
     return {
-      option: "特产",
+      option: "全部",
     };
   },
 

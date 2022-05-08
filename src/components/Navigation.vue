@@ -1,36 +1,23 @@
 <template>
   <div class="nav">
     <el-menu
-      :default-active="全部"
+      :default-active="categories[0]"
       class="el-menu-demo"
       mode="horizontal"
       @select="handleSelect"
     >
-      <el-menu-item index="1" @click="$emit('changeOption', '全部')"
-        >全部</el-menu-item
+      <el-menu-item
+        v-for="(category, key) in categories"
+        :key="key"
+        @click="$emit('changeOption', category)"
+        >{{ category }}</el-menu-item
       >
-      <el-menu-item index="2" @click="$emit('changeOption', '特产')"
-        >特产</el-menu-item
-      >
-      <el-menu-item index="3" @click="$emit('changeOption', '干货')"
-        >干货</el-menu-item
-      >
-      <el-menu-item index="5" @click="$emit('changeOption', '其他')"
-        >其他</el-menu-item
-      >
-      <el-menu-item>
+      <el-menu-item v-show="!isAdmin">
         <router-link to="/landing"> 登录 </router-link></el-menu-item
-      ><el-menu-item @click="logout" v-if="isAdmin"> 注销 </el-menu-item>
-      <el-menu-item v-if="isAdmin"
+      ><el-menu-item @click="logout" v-show="isAdmin"> 注销 </el-menu-item>
+      <el-menu-item v-show="isAdmin"
         ><router-link to="/add"> 添加商品 </router-link></el-menu-item
       >
-
-      <!-- <el-menu-item
-        v-for="(category, index) in categories"
-        :key="index"
-        :index="category.index"
-        >{{ category.name }}</el-menu-item
-      > -->
     </el-menu>
 
     <div class="line"></div>
@@ -39,39 +26,27 @@
 
 <script>
 import router from "../router";
-import AV from "leancloud-storage";
-import { ElMessage } from "element-plus";
+import userService from "../service/userService.js";
 export default {
   data() {
     return {
-      // categories: ["全部", "干货", "特产", "酒类", "其他", "登陆"],
+      categories: ["全部", "特产", "干货", "其他"],
     };
   },
+
   methods: {
     goAdd() {
       router.push("/add");
     },
     logout() {
-      AV.User.logOut().then(
-        ElMessage({
-          showClose: true,
-          type: "success",
-          message: "退出成功",
-        })
-      );
-
+      userService.logOut();
       router.go(0);
     },
   },
-  created() {},
+
   computed: {
     isAdmin() {
-      const currentUser = AV.User.current();
-      if (currentUser && currentUser.getUsername() === "linbili") {
-        return true;
-      } else {
-        return false;
-      }
+      return userService.isAdmin();
     },
   },
 };
