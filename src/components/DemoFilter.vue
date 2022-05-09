@@ -22,37 +22,37 @@ export default {
     return {
       maxId: 3,
       list: [{ id: 1 }, { id: 2 }, { id: 3 }],
-    }
+    };
   },
   methods: {
     random(max) {
-      return Math.floor(Math.random() * (max + 1))
+      return Math.floor(Math.random() * (max + 1));
     },
     add() {
-      const id = ++this.maxId
-      const index = this.random(this.list.length)
-      this.list.splice(index, 0, { id })
+      const id = ++this.maxId;
+      const index = this.random(this.list.length);
+      this.list.splice(index, 0, { id });
     },
     remove() {
-      const index = this.random(this.list.length - 1)
-      this.list.splice(index, 1)
+      const index = this.random(this.list.length - 1);
+      this.list.splice(index, 1);
     },
     shuffle() {
-      const shuffled = []
+      const shuffled = [];
       while (this.list.length > 0) {
-        const index = this.random(this.list.length - 1)
-        shuffled.push(this.list[index])
-        this.list.splice(index, 1)
+        const index = this.random(this.list.length - 1);
+        shuffled.push(this.list[index]);
+        this.list.splice(index, 1);
       }
-      this.list = shuffled
+      this.list = shuffled;
     },
     less5() {
       this.list = this.list.filter((item) => {
-        return item.id < 5
-      })
+        return item.id < 5;
+      });
     },
   },
-}
+};
 </script>
 
 <style scoped>

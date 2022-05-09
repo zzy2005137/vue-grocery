@@ -54,8 +54,8 @@
 </template>
 
 <script>
-import { ElMessage } from "element-plus"
-import AV from "leancloud-storage"
+import { ElMessage } from "element-plus";
+import AV from "leancloud-storage";
 
 export default {
   name: "addForm",
@@ -85,20 +85,20 @@ export default {
       dialogVisible: false,
       fullscreenLoading: false,
       fileList: [],
-    }
+    };
   },
   methods: {
     handleRemove(file, fileList) {
-      console.log(file)
+      console.log(file);
     },
     submitUpload() {
       //   trigger submit
-      this.$refs.upload.submit()
+      this.$refs.upload.submit();
     },
     loadImg(file, fileList) {
-      console.log("handle img")
-      this.ruleForm.img = file.raw
-      console.log(this.ruleForm.img)
+      console.log("handle img");
+      this.ruleForm.img = file.raw;
+      console.log(this.ruleForm.img);
       // fileList.forEach((element) => {
       //   console.log(element.raw)
       // })
@@ -108,75 +108,75 @@ export default {
         showClose: true,
         type: "success",
         message: msg,
-      })
+      });
     },
     showErrorMessage(msg) {
       ElMessage({
         showClose: true,
         type: "error",
         message: msg,
-      })
+      });
     },
     myupload() {
       //验证表单
       if (this.ruleForm.name === "" || this.ruleForm.category === "") {
-        this.showErrorMessage("信息不完整")
-        return
+        this.showErrorMessage("信息不完整");
+        return;
       }
 
       //屏幕锁定，上传中....
-      this.fullscreenLoading = true
-      this.uploadObj()
+      this.fullscreenLoading = true;
+      this.uploadObj();
     },
     uploadObj() {
-      const file = new AV.File(this.ruleForm.img.name, this.ruleForm.img)
+      const file = new AV.File(this.ruleForm.img.name, this.ruleForm.img);
       file.save().then(
         (file) => {
-          console.log(`图片保存完成。URL：${file.url()}`)
+          console.log(`图片保存完成。URL：${file.url()}`);
 
           // 创建对象，关联已上传图片
-          const Item = AV.Object.extend("item")
-          const localItem = new Item()
-          localItem.set("name", this.ruleForm.name)
-          localItem.set("description", this.ruleForm.description)
-          localItem.set("category", this.ruleForm.category)
+          const Item = AV.Object.extend("item");
+          const localItem = new Item();
+          localItem.set("name", this.ruleForm.name);
+          localItem.set("description", this.ruleForm.description);
+          localItem.set("category", this.ruleForm.category);
           // attachments 是一个 Array 属性
-          localItem.add("img", file)
+          localItem.add("img", file);
           localItem.save().then(
             (res) => {
               // 成功保存之后，执行其他逻辑
-              this.showSuccessMessage(`商品信息上传成功`)
-              this.fullscreenLoading = false
-              this.resetForm("ruleForm")
+              this.showSuccessMessage(`商品信息上传成功`);
+              this.fullscreenLoading = false;
+              this.resetForm("ruleForm");
             },
             (error) => {
-              console.log(error)
+              console.log(error);
 
-              this.fullscreenLoading = false
-              this.showErrorMessage("上传失败: " + error)
+              this.fullscreenLoading = false;
+              this.showErrorMessage("上传失败: " + error);
 
               // 异常处理
             }
-          )
+          );
         },
         (error) => {
           // 保存失败，可能是文件无法被读取，或者上传过程中出现问题
 
-          console.log(error)
+          console.log(error);
           // this.showErrorMessage("上传失败，请重置后重试")
-          this.fullscreenLoading = false
-          this.showErrorMessage("上传失败: " + error)
+          this.fullscreenLoading = false;
+          this.showErrorMessage("上传失败: " + error);
         }
-      )
+      );
     },
 
     resetForm(ruleForm) {
-      this.$refs[ruleForm].resetFields()
-      this.fileList = []
+      this.$refs[ruleForm].resetFields();
+      this.fileList = [];
     },
   },
   created() {},
-}
+};
 </script>
 
 <style scoped>

@@ -4,13 +4,13 @@
 </template>
 
 <script>
-import AddForm from "@/components/addForm.vue"
+import AddForm from "@/components/addForm.vue";
 export default {
   name: "addItem",
   components: {
     AddForm,
   },
-}
+};
 </script>
 
 <style scoped>

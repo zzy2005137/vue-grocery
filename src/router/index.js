@@ -6,12 +6,20 @@ import add from "../views/AddItem.vue";
 import test from "../views/Test.vue";
 import update from "../components/updateForm.vue";
 import Index from "../views/Index.vue";
+import Items from "../views/Items.vue";
 
 const routes = [
   {
     path: "/",
     name: "Home",
     component: Home,
+    redirect: { name: "Index" },
+  },
+  {
+    path: "/items",
+    name: "Items",
+    component: Items,
+    props: true,
   },
   {
     path: "/index",

@@ -1,6 +1,5 @@
 import AV from "./init.js";
 
-
 async function getItems() {
   const query = new AV.Query("item");
   query.include("img");

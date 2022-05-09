@@ -1,17 +1,10 @@
 <template>
-  <el-container>
-    <el-header>
-      <Navigation @changeOption="changeOption" />
-    </el-header>
-    <el-main>
-      <ItemList :option="option" />
-    </el-main>
-    <el-footer>
-      <hr />
-      <h4>加微信了解详情</h4>
-      <img class="contact" src="../assets/img/qrcode.jpg" alt="xxx" />
-    </el-footer>
-  </el-container>
+  <el-header>
+    <Navigation @changeOption="changeOption" />
+  </el-header>
+  <el-main>
+    <ItemList :option="option" />
+  </el-main>
 </template>
 
 <script>

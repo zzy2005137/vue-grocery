@@ -83,7 +83,9 @@ export default {
             type: "success",
             message: "登陆成功",
           });
-          console.log(user);
+          this.$store.commit("setIsAdmin", true);
+          // console.log(user);
+
           setTimeout(() => {
             router.push("/");
           }, 800);
