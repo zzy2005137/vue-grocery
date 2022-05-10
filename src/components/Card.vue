@@ -13,6 +13,26 @@
       <h3 class="title">{{ item.name }}</h3>
     </div>
     <!-- card content -->
+    <div class="operation">
+      <!-- admin option -->
+      <el-button
+        v-if="$store.state.isAdmin"
+        class="btn"
+        @click="$emit('deleteObj')"
+        type="danger"
+        plain
+        >删除</el-button
+      >
+      <el-button
+        v-if="$store.state.isAdmin"
+        class="btn"
+        @click="$emit('updateObj')"
+        type="success"
+        plain
+        >修改</el-button
+      >
+      <!-- admin option -->
+    </div>
   </el-card>
 </template>
 
@@ -51,5 +71,8 @@ export default {
 .el-card {
   margin-top: 1rem;
   /* min-height: 14.5rem; */
+}
+.operation {
+  margin-bottom: 1rem;
 }
 </style>

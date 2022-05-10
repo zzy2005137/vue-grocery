@@ -12,7 +12,12 @@
         <div>
           <el-row justify="space-around">
             <el-col :span="11" v-for="item in filterItems" :key="item.objectId">
-              <Card class="card" :item="item"></Card>
+              <Card
+                class="card"
+                :item="item"
+                @deleteObj="deleteObj(item)"
+                @updateObj="updateObj(item)"
+              ></Card>
             </el-col>
           </el-row>
         </div>
@@ -134,8 +139,10 @@ export default {
       3: "干货",
       4: "其他",
     };
-    this.option = hash[this.id];
-    this.activeName = hash[this.id];
+    if (this.id) {
+      this.option = hash[this.id];
+      this.activeName = hash[this.id];
+    }
   },
 
   beforeRouteUpdate(to, from) {
