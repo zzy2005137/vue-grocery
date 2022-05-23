@@ -1,11 +1,12 @@
 <template>
-  <el-card :body-style="{ padding: '0px' }" class="card" @click="showDetail">
+  <el-card :body-style="{ padding: '0px' }" class="card">
     <!-- card imagr -->
     <el-image
       class="card-img"
       :src="item.img[0].url"
       fit="cover"
       lazy
+      @click="showDetail"
     ></el-image>
     <!-- /.card imagr -->
     <!-- card content -->
