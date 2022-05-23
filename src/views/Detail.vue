@@ -63,8 +63,10 @@ export default {
       this.$router.back();
     },
     async copyUrl() {
-      console.log("copy");
-      await navigator.clipboard.writeText(this.$route.fullPath);
+      //获取当前url
+      let url = window.location.href;
+      //clipboard api 复制 url
+      await navigator.clipboard.writeText(url);
       ElNotification({
         title: "Success",
         message: "复制链接成功，前往微信了解详情",
