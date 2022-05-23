@@ -11,11 +11,13 @@ async function getItems() {
   return container;
 }
 
-// function getItems() {
-//   const query = new AV.Query("item");
-//   query.include("img");
-//   return query.find();
-// }
+async function getItemById(id) {
+  const query = new AV.Query("item");
+  query.include("img");
+  query.equalTo("objectId", id);
+  let item = await query.first();
+  return item.toJSON();
+}
 
 function deleteItem(obj) {
   //删除文件
@@ -31,6 +33,7 @@ function deleteItem(obj) {
 export default {
   getItems,
   deleteItem,
+  getItemById,
 };
 
 // function getObjs() {

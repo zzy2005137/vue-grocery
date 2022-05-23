@@ -1,5 +1,5 @@
 <template>
-  <el-card :body-style="{ padding: '0px' }" class="card">
+  <el-card :body-style="{ padding: '0px' }" class="card" @click="showDetail">
     <!-- card imagr -->
     <el-image
       class="card-img"
@@ -55,6 +55,12 @@ export default {
     },
   },
   name: "ItemCard",
+  methods: {
+    showDetail() {
+      let id = this.item.objectId;
+      this.$router.push({ name: "Detail", params: { id: id } });
+    },
+  },
 };
 </script>
 
