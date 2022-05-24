@@ -1,8 +1,10 @@
 <template>
   <div class="items">
+    
     <!-- 分类标签 -->
     <el-tabs type="border-card" v-model="activeName" @tab-click="changeOption">
       <el-tab-pane
+        class="tabs"
         v-for="(name, key) in category"
         :key="key"
         :label="name"
@@ -166,5 +168,10 @@ export default {
 .tab:active {
   background-color: #fdf6ec;
   color: #409eff;
+}
+
+.tabs {
+  position: sticky;
+  top: 0;
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div class="footer">
-    <router-link to="#">首页</router-link> |
-    <router-link to="#">全部商品</router-link> |
-    <router-link to="#"> 关于</router-link>
+    <router-link to="/">首页</router-link> |
+    <router-link to="/items">全部商品</router-link> |
+    <router-link to="/about"> 关于</router-link>
     <p>杂货铺版权所有 © 2021-2022 zzy2005137</p>
   </div>
 </template>

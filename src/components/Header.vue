@@ -2,7 +2,7 @@
   <div class="header">
     <el-row justify="space-between" class="nav-bar">
       <el-col :span="8" class="logo-container" @click="gotoHomePage">
-        <img src="@/assets/logo.png" alt="" class="logo" /> GroceryStore
+        <img src="@/assets/glogo.png" alt="" class="logo" /> GroceryStore
       </el-col>
       <el-col :span="4">
         <a v-if="$store.state.isAdmin" @click="logOut">注销</a>
@@ -52,7 +52,7 @@ a {
   padding: 0.8em;
 }
 .logo {
-  width: 25px;
+  width: 35px;
   margin-right: 10px;
 }
 
@@ -68,6 +68,9 @@ a {
 
 .nav-bar a {
   font-size: 1rem;
+  display: block;
+  /* padding-top: 0.5rem; */
+  padding: 0.5rem;
 }
 .el-col {
   margin: 0.5rem;
