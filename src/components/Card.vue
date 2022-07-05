@@ -5,7 +5,6 @@
       class="card-img"
       :src="item.img[0].url"
       fit="cover"
-      lazy
       @click="showDetail"
     ></el-image>
     <!-- /.card imagr -->

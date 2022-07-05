@@ -24,8 +24,8 @@
         :name="name"
       >
         <!-- 主要显示部分 -->
-
-        <div>
+        <h3 v-show="!loading && !displayedItems.length">未查询到相关结果</h3>
+        <div v-loading="loading" class="main">
           <el-row justify="space-around">
             <el-col
               :span="11"
@@ -42,7 +42,7 @@
           </el-row>
         </div>
         <br />
-        <p>共 {{ displayedItems.length }} 条结果</p>
+        <!-- <p>共 {{ displayedItems.length }} 条结果</p> -->
 
         <!-- 主要显示部分 END -->
       </el-tab-pane>
@@ -69,6 +69,7 @@ export default {
       option: "全部",
       searchInput: "",
       displayedItems: [],
+      loading: false,
     };
   },
   methods: {
@@ -77,10 +78,14 @@ export default {
         this.displayedItems = this.objArray.filter((item) =>
           item.name.includes(this.searchInput)
         );
+      } else {
+        this.displayedItems = this.objArray;
       }
     },
     async getObjs() {
+      this.loading = true;
       this.objArray = await ItemService.getItems();
+      this.loading = false;
       // console.log(this.objArray);
       this.displayedItems = this.filterItems;
     },
@@ -205,5 +210,9 @@ export default {
 }
 .btn {
   font-size: 1rem;
+}
+
+.main {
+  min-height: 80vh;
 }
 </style>
