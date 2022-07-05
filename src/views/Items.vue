@@ -1,8 +1,21 @@
 <template>
   <div class="items">
-    
+    <div class="mt-4">
+      <el-input
+        v-model="searchInput"
+        placeholder="输入商品名称"
+        @change="handleSearch"
+        :clearable="true"
+      >
+        <template #append>
+          <el-button icon="el-icon-search" class="btn" @click="handleSearch">
+            搜索</el-button
+          >
+        </template>
+      </el-input>
+    </div>
     <!-- 分类标签 -->
-    <el-tabs type="border-card" v-model="activeName" @tab-click="changeOption">
+    <el-tabs type="border-card" v-model="option" @tab-click="changeOption">
       <el-tab-pane
         class="tabs"
         v-for="(name, key) in category"
@@ -11,9 +24,14 @@
         :name="name"
       >
         <!-- 主要显示部分 -->
+
         <div>
           <el-row justify="space-around">
-            <el-col :span="11" v-for="item in filterItems" :key="item.objectId">
+            <el-col
+              :span="11"
+              v-for="item in displayedItems"
+              :key="item.objectId"
+            >
               <Card
                 class="card"
                 :item="item"
@@ -23,6 +41,9 @@
             </el-col>
           </el-row>
         </div>
+        <br />
+        <p>共 {{ displayedItems.length }} 条结果</p>
+
         <!-- 主要显示部分 END -->
       </el-tab-pane>
     </el-tabs>
@@ -46,16 +67,25 @@ export default {
       objArray: [],
       category: ["全部", "特产", "干货", "其他"],
       option: "全部",
-      activeName: "全部",
+      searchInput: "",
+      displayedItems: [],
     };
   },
   methods: {
+    handleSearch() {
+      if (this.searchInput) {
+        this.displayedItems = this.objArray.filter((item) =>
+          item.name.includes(this.searchInput)
+        );
+      }
+    },
     async getObjs() {
       this.objArray = await ItemService.getItems();
       // console.log(this.objArray);
+      this.displayedItems = this.filterItems;
     },
     changeOption() {
-      this.option = this.activeName;
+      this.displayedItems = this.filterItems;
     },
 
     deleteObj(obj) {
@@ -143,7 +173,6 @@ export default {
     };
     if (this.id) {
       this.option = hash[this.id];
-      this.activeName = hash[this.id];
     }
   },
 
@@ -173,5 +202,8 @@ export default {
 .tabs {
   position: sticky;
   top: 0;
+}
+.btn {
+  font-size: 1rem;
 }
 </style>

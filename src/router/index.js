@@ -1,30 +1,22 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
-import Detail from "../views/Detail.vue";
-import Landing from "../views/Landing.vue";
-import add from "../views/AddItem.vue";
-import test from "../views/Test.vue";
-import update from "../components/updateForm.vue";
-import Index from "../views/Index.vue";
-import Items from "../views/Items.vue";
 
 const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: () => import("@/views/Home.vue"),
     redirect: { name: "Index" },
   },
   {
     path: "/items",
     name: "Items",
-    component: Items,
+    component: () => import("@/views/Items.vue"),
     props: true,
   },
   {
     path: "/index",
     name: "Index",
-    component: Index,
+    component: () => import("@/views/Index.vue"),
   },
   {
     path: "/about",
@@ -36,30 +28,30 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   {
-    path: "/detail/:id",
+    path: "/detail/:id?",
     name: "Detail",
-    component: Detail,
+    component: () => import("@/views/Detail.vue"),
   },
   {
     path: "/landing",
     name: "Landing",
-    component: Landing,
+    component: () => import("@/views/Landing.vue"),
   },
 
   {
     path: "/add",
     name: "Add",
-    component: add,
+    component: () => import("@/views/AddItem.vue"),
   },
   {
     path: "/test",
     name: "Test",
-    component: test,
+    component: () => import("@/views/Test.vue"),
   },
   {
     path: "/update",
     name: "Update",
-    component: update,
+    component: () => import("@/components/updateForm.vue"),
     props: true,
   },
 ];
