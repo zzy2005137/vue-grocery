@@ -6,16 +6,20 @@
 
     <el-row justify="center" class="category">
       <el-col :span="10">
-        <el-card @click="gotoItemsPage(1)"> 👏全部商品 </el-card>
+        <el-card @click="gotoItemsPage(1)" class="pointer">
+          👏全部商品
+        </el-card>
       </el-col>
       <el-col :span="10">
-        <el-card @click="gotoItemsPage(2)"> 🍖地方特产 </el-card>
+        <el-card @click="gotoItemsPage(2)" class="pointer">
+          🍖地方特产
+        </el-card>
       </el-col>
       <el-col :span="10">
-        <el-card @click="gotoItemsPage(3)"> 🥮干货 </el-card>
+        <el-card @click="gotoItemsPage(3)" class="pointer"> 🥮干货 </el-card>
       </el-col>
       <el-col :span="10">
-        <el-card @click="gotoItemsPage(4)"> 🍥其他 </el-card>
+        <el-card @click="gotoItemsPage(4)" class="pointer"> 🍥其他 </el-card>
       </el-col>
     </el-row>
     <el-button type="primary" class="shop-btn" @click="gotoItemsPage(1)"
@@ -98,5 +102,9 @@ a {
 
 .category {
   margin-top: 2rem;
+}
+
+.pointer {
+  cursor: pointer;
 }
 </style>

@@ -1,10 +1,11 @@
 <template>
   <div class="header">
     <el-row justify="space-between" class="nav-bar">
-      <el-col :span="8" class="logo-container" @click="gotoHomePage">
-        <img src="@/assets/glogo.png" alt="" class="logo" /> GroceryStore
+      <el-col :span="8" class="logo-container pointer" @click="gotoHomePage">
+        <img src="@/assets/glogo.png" alt="" class="logo" />
+        GroceryStore
       </el-col>
-      <el-col :span="4">
+      <el-col :span="4" class="pointer">
         <a v-if="$store.state.isAdmin" @click="logOut">注销</a>
         <router-link to="/landing" v-else> 登录 </router-link>
       </el-col>
@@ -74,5 +75,9 @@ a {
 }
 .el-col {
   margin: 0.5rem;
+}
+
+.pointer {
+  cursor: pointer;
 }
 </style>

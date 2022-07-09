@@ -58,7 +58,11 @@ import Card from "@/components/Card.vue";
 
 export default {
   name: "Items",
-  props: ["id"],
+  props: {
+    id: {
+      default: 1,
+    },
+  },
   components: {
     Card,
   },
@@ -101,12 +105,18 @@ export default {
         center: true,
       })
         .then(() => {
-          ItemService.deleteItem(obj);
-          //更新数组
+          this.loading = true;
+          return ItemService.deleteItem(obj).then(() => {
+            this.loading = false;
+          });
+        })
+        .then(() => {
+          // 更新数组
           const targetIndex = this.objArray.findIndex(
             (element) => element.objectId === obj.objectId
           );
           this.objArray.splice(targetIndex, 1);
+          this.displayedItems = this.filterItems; // 更新显示数组
           this.$message({
             type: "success",
             message: "删除成功!",
@@ -120,30 +130,7 @@ export default {
         });
     },
 
-    confirmDelete() {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-        center: true,
-      })
-        .then(() => {
-          this.$message({
-            type: "success",
-            message: "删除成功!",
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
-        });
-    },
     updateObj(item) {
-      // const imgId = item.img[0].objectId
-      // const objId = item.objectId
-
       router.push({
         name: "Update",
         params: {

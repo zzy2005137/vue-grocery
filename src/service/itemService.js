@@ -19,15 +19,15 @@ async function getItemById(id) {
   return item.toJSON();
 }
 
-function deleteItem(obj) {
+async function deleteItem(obj) {
   //删除文件
-  var targetId = obj.img[0].objectId;
+  const targetId = obj.img[0].objectId;
   const file = AV.File.createWithoutData(targetId);
-  file.destroy();
+  await file.destroy();
 
   //删除对象
   const item = AV.Object.createWithoutData("item", obj.objectId);
-  item.destroy();
+  await item.destroy();
 }
 
 export default {
