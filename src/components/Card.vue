@@ -2,10 +2,11 @@
   <el-card :body-style="{ padding: '0px' }" class="card">
     <!-- card imagr -->
     <el-image
-      class="card-img"
+      class="card-img pointer"
       :src="item.img[0].url"
       fit="cover"
       @click="showDetail"
+      
     ></el-image>
     <!-- /.card imagr -->
     <!-- card content -->
@@ -80,5 +81,8 @@ export default {
 }
 .operation {
   margin-bottom: 1rem;
+}
+.pointer {
+  cursor: pointer;
 }
 </style>
