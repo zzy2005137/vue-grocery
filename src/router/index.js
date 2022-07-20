@@ -3,9 +3,8 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     path: "/",
-    name: "Home",
-
-    redirect: { name: "Index" },
+    name: "Index",
+    component: () => import("@/views/Index.vue"),
   },
   {
     path: "/items",
@@ -13,11 +12,11 @@ const routes = [
     component: () => import("@/views/Items.vue"),
     props: true,
   },
-  {
-    path: "/index",
-    name: "Index",
-    component: () => import("@/views/Index.vue"),
-  },
+  // {
+  //   path: "/index",
+  //   name: "Index",
+  //   component: () => import("@/views/Index.vue"),
+  // },
   {
     path: "/about",
     name: "About",

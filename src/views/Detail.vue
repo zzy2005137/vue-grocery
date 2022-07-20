@@ -40,8 +40,8 @@ export default {
         name: "商品加载中",
         img: [
           {
-            // url: "sss",
-            url: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcdn.shejipi.com%2Fwp-content%2Fuploads%2F2017%2F07%2Funtitled-5-1.gif&refer=http%3A%2F%2Fcdn.shejipi.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654670785&t=37fef21811975539689196623c28568a",
+            // url: "../assets/logo.png",
+            // url: "http://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcdn.shejipi.com%2Fwp-content%2Fuploads%2F2017%2F07%2Funtitled-5-1.gif&refer=http%3A%2F%2Fcdn.shejipi.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654670785&t=37fef21811975539689196623c28568a",
           },
         ],
         category: "其他",
@@ -62,16 +62,20 @@ export default {
     goBack() {
       this.$router.back();
     },
-    async copyUrl() {
+    copyUrl() {
       //获取当前url
       let url = window.location.href;
       //clipboard api 复制 url
-      await navigator.clipboard.writeText(url);
-      ElNotification({
+      navigator.clipboard.writeText(url).then(
+        ()=>{
+          ElNotification({
         title: "Success",
         message: "复制链接成功，前往微信了解详情",
         type: "success",
       });
+        }
+      );
+      
     },
   },
   created() {
