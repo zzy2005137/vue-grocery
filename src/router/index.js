@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import store from "@/store";
 
 const routes = [
   {
@@ -20,8 +21,7 @@ const routes = [
   {
     path: "/about",
     name: "About",
-    component: () =>
-      import("../views/About.vue"),
+    component: () => import("../views/About.vue"),
   },
   {
     path: "/detail/:id?",
@@ -38,6 +38,9 @@ const routes = [
     path: "/add",
     name: "Add",
     component: () => import("@/views/AddItem.vue"),
+    meta: {
+      requireLogin: true,
+    },
   },
   {
     path: "/test",
@@ -49,12 +52,34 @@ const routes = [
     name: "Update",
     component: () => import("@/components/updateForm.vue"),
     props: true,
+    meta: {
+      requireLogin: true,
+    },
+  },
+  {
+    path: "/cart",
+    name: "Cart",
+    component: () => import("@/views/Cart"),
+  },
+  {
+    path: "/success",
+    name: "Success",
+    component: () => import("@/views/Success"),
   },
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory("/grocery"),
   routes,
+});
+
+//添加路由守卫，进行权限控制
+router.beforeEach((to, from, next) => {
+  if (to.meta.requireLogin && !store.state.isAdmin) {
+    next({ name: "Landing" });
+  } else {
+    next();
+  }
 });
 
 export default router;

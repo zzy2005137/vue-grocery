@@ -25,7 +25,9 @@
       </ul>
     </el-card>
 
-    <el-button type="success" @click="copyUrl" class="btn">复制链接</el-button>
+    <el-button type="success" @click="addToCart()" class="btn"
+      >加入购物车</el-button
+    >
   </div>
 </template>
 
@@ -66,16 +68,33 @@ export default {
       //获取当前url
       let url = window.location.href;
       //clipboard api 复制 url
-      navigator.clipboard.writeText(url).then(
-        ()=>{
-          ElNotification({
-        title: "Success",
-        message: "复制链接成功，前往微信了解详情",
-        type: "success",
+      navigator.clipboard.writeText(url).then(() => {
+        ElNotification({
+          title: "Success",
+          message: "复制链接成功，前往微信了解详情",
+          type: "success",
+        });
       });
-        }
-      );
-      
+    },
+    addToCart(item) {
+      let payload = {
+        id: this.item.objectId,
+        target: {
+          name: this.item.name,
+          img: this.item.img[0].url,
+          quantity: 1,
+        },
+      };
+      this.$store.commit("cart/addItem", payload);
+      // ElNotification({
+      //   title: "Success",
+      //   message: "已添加到购物车",
+      //   type: "success",
+      // });
+      this.$message({
+        type: "success",
+        message: "已添加到购物车",
+      });
     },
   },
   created() {

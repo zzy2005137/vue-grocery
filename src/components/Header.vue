@@ -5,6 +5,10 @@
         <img src="@/assets/glogo.png" alt="" class="logo" />
         GroceryStore
       </el-col>
+      <el-col :span="4" :push="4"
+        ><router-link to="/cart"
+          ><div class="el-icon-shopping-cart-2 cart-icon"></div></router-link
+      ></el-col>
       <el-col :span="4" class="pointer">
         <a v-if="$store.state.isAdmin" @click="logOut">注销</a>
         <router-link to="/landing" v-else> 登录 </router-link>
@@ -79,5 +83,9 @@ a {
 
 .pointer {
   cursor: pointer;
+}
+
+.cart-icon {
+  font-size: 1.5rem;
 }
 </style>

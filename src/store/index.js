@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 import itemService from "@/service/itemService.js";
-
+import cart from "./modules/cart.js";
 export default createStore({
   state: {
     isAdmin: false,
@@ -34,5 +34,7 @@ export default createStore({
       };
     },
   },
-  modules: {},
+  modules: {
+    cart,
+  },
 });
